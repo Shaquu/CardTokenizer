@@ -1,5 +1,7 @@
 package pl.tw.tokenizer.card;
 
+import pl.tw.tokenizer.validators.CardValidator;
+
 public class CardData extends CardValidator implements CardInterface {
 
     private String cardNumber = null;

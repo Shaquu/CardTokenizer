@@ -1,36 +1,24 @@
-package pl.tw.tokenizer.card;
-
-import pl.tw.tokenizer.card.luhn.LuhnValidator;
+package pl.tw.tokenizer.validators;
 
 import java.util.regex.Pattern;
 
-public class CardValidator {
+public class CardValidator extends ValidatorInterface {
 
     //Min and max length of a card number
     private static final int minCardNumberLength = 15;
     private static final int maxCardNumberLength = 19;
     //Regex for digit only characters
     private static final String cardDigitsRegex = "^[0-9]*$";
-    //Is card number valid
-    private boolean valid = true;
 
-    CardValidator(String cardNumber) {
-        //if valid return false then skip the rest validation checks
-        if (valid) {
-            validateDigits(cardNumber);
-        }
-        if (valid) {
-            validateLength(cardNumber);
-        }
-        if (valid) {
-            validateLuhn(cardNumber);
-        }
+    public CardValidator(String cardNumber) {
+        super(cardNumber);
+        check();
     }
 
     //If cardNumber equals characters other then digits then throw exception
     private void validateDigits(String cardNumber) {
         if (!Pattern.compile(cardDigitsRegex).matcher(cardNumber).matches()) {
-            valid = false;
+            setValid(false);
             throw new RuntimeException("Incorrect characters in Card number '" + cardNumber + "' value");
         }
     }
@@ -38,21 +26,32 @@ public class CardValidator {
     //If cardNumber length is incorrect then throw exception
     private void validateLength(String cardNumber) {
         if (cardNumber.length() < minCardNumberLength || cardNumber.length() > maxCardNumberLength) {
-            valid = false;
+            setValid(false);
             throw new RuntimeException("Incorrect length for Card number '" + cardNumber + "'.Should be from " + minCardNumberLength + " to " + maxCardNumberLength);
         }
     }
 
     //If cardNumber luhn validation failed then throw exception
     private void validateLuhn(String cardNumber) {
-        if (!LuhnValidator.check(cardNumber)) {
-            valid = false;
+        LuhnValidator luhnValidator = (LuhnValidator) new LuhnValidator(cardNumber).check();
+        if (!luhnValidator.isValid()) {
+            setValid(false);
             throw new RuntimeException("Card number '" + cardNumber + "' is not valid luhn number");
         }
-        valid = true;
     }
 
-    public boolean isValid() {
-        return valid;
+    @Override
+    public ValidatorInterface check() {
+        //if valid return false then skip the rest validation checks
+        if (isValid()) {
+            validateDigits(getValue());
+        }
+        if (isValid()) {
+            validateLength(getValue());
+        }
+        if (isValid()) {
+            validateLuhn(getValue());
+        }
+        return this;
     }
 }
