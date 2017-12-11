@@ -4,10 +4,9 @@ import pl.tw.tokenizer.validators.CardValidator;
 
 public class CardData extends CardValidator implements CardInterface {
 
-    private String cardNumber = null;
-    private String bin = null;
-
-    private String tokenNumber = null;
+    private String cardNumber;
+    private String bin;
+    private String tokenNumber;
 
     public CardData(String cardNumber) {
         super(cardNumber);

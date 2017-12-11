@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.tw.tokenizer.CardTokenizerApplication;
 import pl.tw.tokenizer.card.CardData;
 
+import javax.annotation.PreDestroy;
+
 @RestController
 public class TokenizerController {
 
@@ -15,12 +17,10 @@ public class TokenizerController {
         CardData cardData = new CardData(cardNumber);
         if (cardData.isValid()) {
             cardData.getTokenNumber();
-            //System.out.println("Tokenization succesfull for " + cardData.toString());
-            CardTokenizerApplication.log.info("Tokenization succesfull for " + cardData.toString());
+            CardTokenizerApplication.log.debug("Tokenization succesfull for " + cardData.toString());
             return cardData;
         } else {
-            //System.out.println("Tokenization failed for " + cardData.toString());
-            CardTokenizerApplication.log.error("Tokenization succesfull for " + cardData.toString());
+            CardTokenizerApplication.log.error("Tokenization failed for " + cardData.toString());
             return cardData;
         }
     }

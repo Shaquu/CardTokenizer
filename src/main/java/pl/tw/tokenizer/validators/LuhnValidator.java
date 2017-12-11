@@ -1,6 +1,6 @@
 package pl.tw.tokenizer.validators;
 
-//Source on https://github.com/eix128/gnuc-credit-card-checker/blob/master/CCCheckerPro/src/com/gnuc/java/ccc/Luhn.java
+//Based on https://github.com/eix128/gnuc-credit-card-checker/blob/master/CCCheckerPro/src/com/gnuc/java/ccc/Luhn.java
 
 public class LuhnValidator extends ValidatorInterface {
 

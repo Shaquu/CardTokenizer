@@ -1,6 +1,9 @@
 package pl.tw.tokenizer.card.luhn;
 
-//Source on https://gist.github.com/josefeg/5781824
+//Original source for luhn check digit generator algorithm on https://gist.github.com/josefeg/5781824
+
+import pl.tw.tokenizer.CardTokenizerApplication;
+import pl.tw.tokenizer.files.token.TokenNodeLoader;
 
 import java.util.Random;
 
@@ -12,16 +15,26 @@ public class LuhnGenerator {
 
         int numbersToGenerate = cardLength - (bin.length() + 1);
 
-        StringBuilder builder = new StringBuilder(bin);
-        for (int i = 0; i < numbersToGenerate; i++) {
-            int digit = random.nextInt(10);
-            builder.append(digit);
-        }
+        StringBuilder builderCard = new StringBuilder(bin);
+        StringBuilder builderRandom;
+        do{
+            CardTokenizerApplication.log.debug("Generating randomBody for bin:" + bin);
+            builderRandom = new StringBuilder();
+            for (int i = 0; i < numbersToGenerate; i++) {
+                int digit = random.nextInt(10);
+                builderRandom.append(digit);
+            }
+        } while(TokenNodeLoader.containsBodyNode(bin, builderRandom.toString()));
+        CardTokenizerApplication.log.debug("Generated randomBody:" + builderRandom.toString() + " for bin:" + bin);
 
-        int checkDigit = getCheckDigit(builder.toString());
-        builder.append(checkDigit);
+        TokenNodeLoader.addBodyNode(bin, builderRandom.toString());
 
-        return builder.toString();
+        builderCard.append(builderRandom);
+        int checkDigit = getCheckDigit(builderCard.toString());
+        CardTokenizerApplication.log.debug("Generated checkDigit:" + checkDigit + " for bin:" + bin);
+        builderCard.append(checkDigit);
+
+        return builderCard.toString();
     }
 
     private static int getCheckDigit(String number) {

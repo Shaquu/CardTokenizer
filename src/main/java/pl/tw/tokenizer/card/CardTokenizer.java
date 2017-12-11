@@ -1,6 +1,6 @@
 package pl.tw.tokenizer.card;
 
-import pl.tw.tokenizer.cache.CardDataCache;
+import pl.tw.tokenizer.files.cache.CardDataCache;
 import pl.tw.tokenizer.card.luhn.LuhnGenerator;
 
 public class CardTokenizer {

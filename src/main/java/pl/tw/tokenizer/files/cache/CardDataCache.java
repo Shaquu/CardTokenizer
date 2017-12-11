@@ -1,4 +1,4 @@
-package pl.tw.tokenizer.cache;
+package pl.tw.tokenizer.files.cache;
 
 import pl.tw.tokenizer.card.CardInterface;
 
