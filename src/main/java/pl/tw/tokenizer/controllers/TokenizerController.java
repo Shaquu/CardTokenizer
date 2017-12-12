@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.tw.tokenizer.CardTokenizerApplication;
 import pl.tw.tokenizer.card.CardData;
 
-import javax.annotation.PreDestroy;
-
 @RestController
 public class TokenizerController {
 

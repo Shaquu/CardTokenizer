@@ -17,7 +17,7 @@ public class LuhnGenerator {
 
         StringBuilder builderCard = new StringBuilder(bin);
         StringBuilder builderRandom;
-        do{
+        do {
             CardTokenizerApplication.log.debug("Generating randomBody for bin:" + bin);
             builderRandom = new StringBuilder();
             for (int i = 0; i < numbersToGenerate; i++) {

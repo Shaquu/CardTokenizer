@@ -16,7 +16,6 @@ import javax.annotation.PreDestroy;
 public class CardTokenizerApplication {
     public static Logger log = Logger.getLogger(CardTokenizerApplication.class.getName());
 
-
     @Bean
     ApplicationShutdownListener appShutdownListener() {
         return new ApplicationShutdownListener();
